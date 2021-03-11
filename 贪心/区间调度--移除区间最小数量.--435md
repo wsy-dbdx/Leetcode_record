@@ -1,0 +1,28 @@
+# 求出最多有几个互不相交的区间
+则做法是按end升序排序，选择一个结束最早的x，然后把区间中与它冲突的全部删除（别的区间的start要大于这个区间的end），接着重复步骤直到堆中没有区间。
+不用堆只用数组的话可以用一个for循环遍历整个数组，记录此时这个节点的start，如果它大于x的end，就令可选择数量加1，并更新x。
+# 找到要移除区间的最小数量，使得剩下的区间不重叠
+和求最多有几个不相交区间一样，统计方式不同罢了。
+```java
+class Solution {
+    public int eraseOverlapIntervals(int[][] intervals) {
+        if(intervals.length==0)return 0;
+        Arrays.sort(intervals,new Comparator<int[]>(){
+            public int compare(int[] a,int[] b){
+                return a[1]==b[1]?a[0]-b[0]:a[1]-b[1];
+            }
+        });
+        int end=intervals[0][1];
+        int res=0;
+        for(int i=1;i<intervals.length;i++){
+            int start=intervals[i][0];
+            if(start>=end){
+                end=intervals[i][1];
+            }else{
+                res++;
+            }
+        }
+        return res;
+    }
+}
+```
