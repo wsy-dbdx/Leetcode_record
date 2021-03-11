@@ -1,0 +1,16 @@
+这个题首先可以转换为一个求最值的问题，也就是求最远可到达的问题，所以可以用动态规划或者是贪心来解。
+如果用动态规划，dp[i]表示的是此时这个位置可以到达的最远距离，则dp[i]=i+nums[i]和这个距离中较大的一个。
+优化之后其实就是贪心。
+数组中存放着此时位置可以跳的距离。维护一个此时最大可到达位置，如果此时位置可到达，才更新此时的最大位置。如果超过最远下标则可到达。
+
+```java
+class Solution {
+    public boolean canJump(int[] nums) {
+        int max=0;
+        for(int i=0;i<nums.length;i++){
+                if(max>=i)max=Math.max(i+nums[i],max);                                                              
+        }
+        return max>=nums.length-1;
+    }
+}
+```
